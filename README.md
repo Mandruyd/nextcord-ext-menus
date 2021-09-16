@@ -1,10 +1,10 @@
-# nextcord-ext-menus
+# discord-ext-menus
 
 [![Discord server invite](https://discord.com/api/guilds/881118111967883295/embed.png)](https://discord.gg/ZebatWssCB)
-[![PyPI version info](https://img.shields.io/pypi/v/nextcord-ext-menus.svg)](https://pypi.python.org/pypi/nextcord-ext-menus)
-[![PyPI supported Python versions](https://img.shields.io/pypi/pyversions/nextcord.svg)](https://pypi.python.org/pypi/nextcord)
+[![PyPI version info](https://img.shields.io/pypi/v/discord-ext-menus.svg)](https://pypi.python.org/pypi/discord-ext-menus)
+[![PyPI supported Python versions](https://img.shields.io/pypi/pyversions/discord.svg)](https://pypi.python.org/pypi/discord)
 
-A Nextcord extension that makes working with reaction menus and button component menus a bit easier.
+A discord extension that makes working with reaction menus and button component menus a bit easier.
 
 ![pages](https://user-images.githubusercontent.com/20955511/132110266-579e7090-5929-4f00-a4df-5bcf498890ee.gif)
 
@@ -14,16 +14,16 @@ A Nextcord extension that makes working with reaction menus and button component
 
 **Python 3.8 or higher is required**
 
-It is necessary to first install [Nextcord](https://github.com/nextcord/nextcord)
+It is necessary to first install [discord](https://github.com/discord/discord)
 
 Then install the extension by running one of the following commands:
 
 ```py 
 # Linux/macOS
-python3 -m pip install -U nextcord-ext-menus
+python3 -m pip install -U discord-ext-menus
 
 # Windows
-py -3 -m pip install -U nextcord-ext-menus
+py -3 -m pip install -U discord-ext-menus
 ```
 
 ## Reaction Menus
@@ -33,7 +33,7 @@ To whet your appetite, the following examples show the fundamentals on how to cr
 The first example shows a basic menu that has a stop button and two reply buttons:
 
 ```py
-from nextcord.ext import menus
+from discord.ext import menus
 
 class MyMenu(menus.Menu):
     async def send_initial_message(self, ctx, channel):
@@ -65,7 +65,7 @@ If an error happens then an exception of type `menus.MenuError` is raised.
 This second example shows a confirmation menu and how we can compose it and use it later:
 
 ```py
-from nextcord.ext import menus
+from discord.ext import menus
 
 class Confirm(menus.Menu):
     def __init__(self, msg):
@@ -118,7 +118,7 @@ None of these page sources deal with formatting of data, leaving that up to you.
 For the sake of example, here's a basic list source that is paginated:
 
 ```py
-from nextcord.ext import menus
+from discord.ext import menus
 
 class MySource(menus.ListPageSource):
     def __init__(self, data):
@@ -133,12 +133,12 @@ pages = menus.MenuPages(source=MySource(range(1, 100)), clear_reactions_after=Tr
 await pages.start(ctx)
 ```
 
-The `format_page` can return either a `str` for content, `nextcord.Embed` for an embed, or a `dict` to pass into the kwargs of `Message.edit`.
+The `format_page` can return either a `str` for content, `discord.Embed` for an embed, or a `dict` to pass into the kwargs of `Message.edit`.
 
 Some more examples using `GroupByPageSource`:
 
 ```py
-from nextcord.ext import menus
+from discord.ext import menus
 
 class Test:
     def __init__(self, key, value):
@@ -163,7 +163,7 @@ await pages.start(ctx)
 Another one showing `AsyncIteratorPageSource`:
 
 ```py
-from nextcord.ext import menus
+from discord.ext import menus
 
 class Test:
     def __init__(self, value):
@@ -194,7 +194,7 @@ Here is a button implementation of a basic menu that has a stop button and two r
 
 Note that the `ButtonMenu` class is used instead of `Menu` in order to make it a `View`. `ButtonMenu` is a subclass of `Menu` and it therefore has all the same attributes and methods.
 
-Also note that `view=self` is passed with the initial message and `nextcord.ui.button` is used instead of `menus.button`.
+Also note that `view=self` is passed with the initial message and `discord.ui.button` is used instead of `menus.button`.
 
 `ButtonMenu.disable` can be used to disable all buttons in the menu.
 
@@ -203,8 +203,8 @@ Also note that `view=self` is passed with the initial message and `nextcord.ui.b
 Additionally, `disable_buttons_after` can be used as a kwarg to ButtonMenu to disable all buttons when the menu stops and `clear_buttons_after` can be used to remove them.
 
 ```py
-import nextcord
-from nextcord.ext import menus
+import discord
+from discord.ext import menus
 
 class MyButtonMenu(menus.ButtonMenu):
     def __init__(self):
@@ -213,15 +213,15 @@ class MyButtonMenu(menus.ButtonMenu):
     async def send_initial_message(self, ctx, channel):
         return await channel.send(f'Hello {ctx.author}', view=self)
 
-    @nextcord.ui.button(emoji="\N{THUMBS UP SIGN}")
+    @discord.ui.button(emoji="\N{THUMBS UP SIGN}")
     async def on_thumbs_up(self, button, interaction):
         await self.message.edit(content=f"Thanks {interaction.user}!")
 
-    @nextcord.ui.button(emoji="\N{THUMBS DOWN SIGN}")
+    @discord.ui.button(emoji="\N{THUMBS DOWN SIGN}")
     async def on_thumbs_down(self, button, interaction):
         await self.message.edit(content=f"That's not nice {interaction.user}...")
 
-    @nextcord.ui.button(emoji="\N{BLACK SQUARE FOR STOP}\ufe0f")
+    @discord.ui.button(emoji="\N{BLACK SQUARE FOR STOP}\ufe0f")
     async def on_stop(self, button, interaction):
         self.stop()
 ```
@@ -244,11 +244,11 @@ A `ButtonStyle` can optionally be passed in to customize the appearance of the b
 
 ```py
 pages = menus.ButtonMenuPages(source=MySource(range(1, 100)), clear_buttons_after=True, 
-                              style=nextcord.ButtonStyle.primary)
+                              style=discord.ButtonStyle.primary)
 await pages.start(ctx)
 ```
 
 ## License
 
-Copyright (c) 2021 The Nextcord Developers  
+Copyright (c) 2021 The discord Developers  
 Copyright (c) 2015-2020 Danny Y. (Rapptz)

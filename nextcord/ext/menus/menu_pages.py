@@ -1,7 +1,7 @@
 from typing import Any, List, Optional
 
-import nextcord
-from nextcord.ext import commands
+import discord
+from discord.ext import commands
 
 from .constants import EmojiType, PageFormatType, SendKwargsType
 from .menus import ButtonMenu, Menu, button
@@ -69,12 +69,12 @@ class MenuPagesBase(Menu):
         return self._source.is_paginating()
 
     async def _get_kwargs_from_page(self, page: List[Any]) -> SendKwargsType:
-        value: PageFormatType = await nextcord.utils.maybe_coroutine(self._source.format_page, self, page)
+        value: PageFormatType = await discord.utils.maybe_coroutine(self._source.format_page, self, page)
         if isinstance(value, dict):
             return value
         elif isinstance(value, str):
             return {'content': value, 'embed': None}
-        elif isinstance(value, nextcord.Embed):
+        elif isinstance(value, discord.Embed):
             return {'embed': value, 'content': None}
 
     async def show_page(self, page_number: int):
@@ -83,7 +83,7 @@ class MenuPagesBase(Menu):
         kwargs = await self._get_kwargs_from_page(page)
         await self.message.edit(**kwargs)
 
-    async def send_initial_message(self, ctx: commands.Context, channel: nextcord.abc.Messageable) -> nextcord.Message:
+    async def send_initial_message(self, ctx: commands.Context, channel: discord.abc.Messageable) -> discord.Message:
         """|coro|
 
         The default implementation of :meth:`Menu.send_initial_message`
@@ -97,7 +97,7 @@ class MenuPagesBase(Menu):
             kwargs['view'] = self
         return await channel.send(**kwargs)
 
-    async def start(self, ctx: commands.Context, *, channel: Optional[nextcord.abc.Messageable] = None, wait: Optional[bool] = False):
+    async def start(self, ctx: commands.Context, *, channel: Optional[discord.abc.Messageable] = None, wait: Optional[bool] = False):
         await self._source._prepare_once()
         await super().start(ctx, channel=channel, wait=wait)
 
@@ -162,16 +162,16 @@ class MenuPages(MenuPagesBase):
         self.stop()
 
 
-class MenuPaginationButton(nextcord.ui.Button['MenuPaginationButton']):
+class MenuPaginationButton(discord.ui.Button['MenuPaginationButton']):
     """
     A custom button for pagination that will be disabled when unavailable.
     """
 
-    def __init__(self, style: nextcord.ButtonStyle, emoji: EmojiType):
+    def __init__(self, style: discord.ButtonStyle, emoji: EmojiType):
         super().__init__(style=style, emoji=emoji)
         self._emoji = _cast_emoji(emoji)
 
-    async def callback(self, interaction: nextcord.Interaction):
+    async def callback(self, interaction: discord.Interaction):
         """
         Callback for when this button is pressed
         """
@@ -205,7 +205,7 @@ class ButtonMenuPages(MenuPagesBase, ButtonMenu):
 
     Parameters
     -----------
-    style: :class:`nextcord.ui.ButtonStyle`
+    style: :class:`discord.ui.ButtonStyle`
         The button style to use for the pagination buttons.
 
     Attributes
@@ -215,7 +215,7 @@ class ButtonMenuPages(MenuPagesBase, ButtonMenu):
         between [0, :attr:`PageSource.max_pages`).
     """
 
-    def __init__(self, source: PageSource, style: nextcord.ButtonStyle = nextcord.ButtonStyle.secondary, **kwargs):
+    def __init__(self, source: PageSource, style: discord.ButtonStyle = discord.ButtonStyle.secondary, **kwargs):
         self.__button_menu_pages__ = True
         super().__init__(source, **kwargs)
         # add buttons to the view

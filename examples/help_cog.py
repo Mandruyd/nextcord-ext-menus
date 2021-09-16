@@ -7,8 +7,8 @@ https://gist.github.com/Rapptz/31a346ed1eb545ddeb0d451d81a60b3b
 
 from dataclasses import dataclass
 
-import nextcord
-from nextcord.ext import commands, menus
+import discord
+from discord.ext import commands, menus
 
 from config import PREFIX
 
@@ -31,7 +31,7 @@ class HelpPages(menus.ListPageSource):
         Returns an embed containing the entries for the current page
         """
         invoked_with = self._help_command.invoked_with
-        embed = nextcord.Embed(title="Bot Commands",
+        embed = discord.Embed(title="Bot Commands",
                                colour=self._help_command.COLOUR)
         embed.description = (
             f'Use "{PREFIX}{invoked_with} command" for more info on a command.\n'
@@ -47,7 +47,7 @@ class NewHelpCommand(commands.MinimalHelpCommand):
     """Custom help command override using embeds"""
 
     # embed colour
-    COLOUR = nextcord.Colour.blurple()
+    COLOUR = discord.Colour.blurple()
 
     def get_command_signature(self, command: commands.core.Command):
         """Retrieves the signature portion of the help page."""
@@ -56,7 +56,7 @@ class NewHelpCommand(commands.MinimalHelpCommand):
     async def send_bot_help(self, mapping: dict):
         """implements bot command help page"""
         invoked_with = self.invoked_with
-        embed = nextcord.Embed(title="Bot Commands", colour=self.COLOUR)
+        embed = discord.Embed(title="Bot Commands", colour=self.COLOUR)
         embed.description = (
             f'Use "{PREFIX}{invoked_with} command" for more info on a command.\n'
             f'Use "{PREFIX}{invoked_with} category" for more info on a category.'
@@ -81,7 +81,7 @@ class NewHelpCommand(commands.MinimalHelpCommand):
 
     async def send_cog_help(self, cog: commands.Cog):
         """implements cog help page"""
-        embed = nextcord.Embed(
+        embed = discord.Embed(
             title=f"{cog.qualified_name} Commands", colour=self.COLOUR
         )
         if cog.description:
@@ -101,7 +101,7 @@ class NewHelpCommand(commands.MinimalHelpCommand):
 
     async def send_group_help(self, group: commands.Group):
         """implements group help page and command help page"""
-        embed = nextcord.Embed(title=group.qualified_name, colour=self.COLOUR)
+        embed = discord.Embed(title=group.qualified_name, colour=self.COLOUR)
         if group.help:
             embed.description = group.help
 

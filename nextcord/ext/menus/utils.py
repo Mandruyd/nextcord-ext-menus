@@ -2,7 +2,7 @@ from typing import Pattern
 from .constants import EmojiType
 import re
 
-import nextcord
+import discord
 
 
 class Position:
@@ -59,7 +59,7 @@ _custom_emoji = re.compile(
 
 
 def _cast_emoji(obj: EmojiType, *, _custom_emoji: Pattern[str]=_custom_emoji):
-    if isinstance(obj, nextcord.PartialEmoji):
+    if isinstance(obj, discord.PartialEmoji):
         return obj
 
     obj = str(obj)
@@ -69,5 +69,5 @@ def _cast_emoji(obj: EmojiType, *, _custom_emoji: Pattern[str]=_custom_emoji):
         animated = bool(groups['animated'])
         emoji_id = int(groups['id'])
         name = groups['name']
-        return nextcord.PartialEmoji(name=name, animated=animated, id=emoji_id)
-    return nextcord.PartialEmoji(name=obj, id=None, animated=False)
+        return discord.PartialEmoji(name=name, animated=animated, id=emoji_id)
+    return discord.PartialEmoji(name=obj, id=None, animated=False)

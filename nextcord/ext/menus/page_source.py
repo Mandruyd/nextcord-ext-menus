@@ -103,16 +103,16 @@ class PageSource:
         This method must return one of the following types.
 
         If this method returns a ``str`` then it is interpreted as returning
-        the ``content`` keyword argument in :meth:`nextcord.Message.edit`
-        and :meth:`nextcord.abc.Messageable.send`.
+        the ``content`` keyword argument in :meth:`discord.Message.edit`
+        and :meth:`discord.abc.Messageable.send`.
 
-        If this method returns a :class:`nextcord.Embed` then it is interpreted
-        as returning the ``embed`` keyword argument in :meth:`nextcord.Message.edit`
-        and :meth:`nextcord.abc.Messageable.send`.
+        If this method returns a :class:`discord.Embed` then it is interpreted
+        as returning the ``embed`` keyword argument in :meth:`discord.Message.edit`
+        and :meth:`discord.abc.Messageable.send`.
 
         If this method returns a ``dict`` then it is interpreted as the
-        keyword-arguments that are used in both :meth:`nextcord.Message.edit`
-        and :meth:`nextcord.abc.Messageable.send`. The two of interest are
+        keyword-arguments that are used in both :meth:`discord.Message.edit`
+        and :meth:`discord.abc.Messageable.send`. The two of interest are
         ``embed`` and ``content``.
 
         Parameters
@@ -124,7 +124,7 @@ class PageSource:
 
         Returns
         ---------
-        Union[:class:`str`, :class:`nextcord.Embed`, :class:`dict`]
+        Union[:class:`str`, :class:`discord.Embed`, :class:`dict`]
             See above.
         """
         raise NotImplementedError
