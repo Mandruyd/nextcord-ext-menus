@@ -20,10 +20,8 @@ Then install the extension by running one of the following commands:
 
 ```py 
 # Linux/macOS
-python3 -m pip install -U discord-ext-menus
+python -m pip install -U git+https://github.com/Mandruyd/nextcord-ext-menus.git
 
-# Windows
-py -3 -m pip install -U discord-ext-menus
 ```
 
 ## Reaction Menus
